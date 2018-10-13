@@ -3,12 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dictionary;
 
+
+package Dictionary;
+import com.sun.speech.freetts.*;
 /**
  *
  * @author ID
  */
 public class Sound {
     
+    private static final String VOICE = "kevin16";
+    public void speak(String s){
+        Voice voice;
+        VoiceManager vm = VoiceManager.getInstance();
+        voice = vm.getVoice(VOICE);
+        voice.allocate();
+        try{
+            voice.speak(s);
+        }catch(Exception e){  
+        }
+    }  
 }

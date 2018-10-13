@@ -5,12 +5,17 @@
  */
 package Frame;
 
+import Dictionary.E_VFile;
 import Dictionary.SearchforJlist;
 import Dictionary.KhoTudien;
+import Dictionary.V_EFile;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import java.util.Collections;
+import Dictionary.Sound;
+import javax.swing.event.AncestorEvent;
+
 
 /**
  *
@@ -21,10 +26,30 @@ public class frame extends javax.swing.JFrame {
     /**
      * Creates new form Textarea
      */
+   
     
-    KhoTudien dic = new KhoTudien();
+    
+    int select = 0;
+    
+    
+    //Các cửa sổ để chỉnh sửa
+    AddJframe fADD = new AddJframe();
+    EditJframe fEdit = new EditJframe();
+    RemoveJframe fRemove = new RemoveJframe();
+    
+    
+    //
     SearchforJlist s = new SearchforJlist();
+    
+    //Đọc tệp 
+    E_VFile dic1 = new E_VFile();
+    V_EFile dic2 = new V_EFile();
+    
+    //Voice
+    Sound speak = new Sound();
+    
     public frame() {
+        setTitle("Dictionary");
         initComponents();
         setLocation(560,240);
     }
@@ -39,28 +64,39 @@ public class frame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Search = new javax.swing.JButton();
+        Sound = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        E_V = new javax.swing.JButton();
+        V_E = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
+        Author = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Press = new javax.swing.JMenuItem();
         Exit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        Add = new javax.swing.JMenuItem();
-        Edit = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setFont(new java.awt.Font("Viner Hand ITC", 0, 14)); // NOI18N
+        setBackground(new java.awt.Color(102, 255, 102));
+        setBounds(new java.awt.Rectangle(10, 10, 10, 10));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        setForeground(new java.awt.Color(255, 153, 0));
         setSize(new java.awt.Dimension(800, 1200));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,17 +110,20 @@ public class frame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Search.setText("Search");
+        Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                SearchActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Sound");
-        jButton2.setToolTipText("");
-
-        jButton3.setText("Record");
+        Sound.setText("Sound");
+        Sound.setToolTipText("");
+        Sound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SoundActionPerformed(evt);
+            }
+        });
 
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList1.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -108,16 +147,27 @@ public class frame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jList1);
 
-        jButton4.setText("English->Viet");
-
-        jButton5.setText("Viet->English");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        E_V.setText("Anh->Viet");
+        E_V.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                E_VActionPerformed(evt);
+            }
+        });
+
+        V_E.setText("Viet->Anh");
+        V_E.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                V_EActionPerformed(evt);
             }
         });
 
         jScrollPane1.setViewportView(jTextPane1);
+
+        Author.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Author.setText("Created by Dinh Hiep & Mai Dat");
+
+        jMenuBar1.setBackground(new java.awt.Color(220, 43, 45));
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jMenu1.setText("File");
 
@@ -136,16 +186,40 @@ public class frame extends javax.swing.JFrame {
 
         jMenu2.setText("Edit");
 
-        Add.setText("Add");
-        Add.addActionListener(new java.awt.event.ActionListener() {
+        jMenu4.setText("Add");
+
+        jMenuItem2.setText("add English");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(Add);
+        jMenu4.add(jMenuItem2);
 
-        Edit.setText("Editword");
-        jMenu2.add(Edit);
+        jMenuItem3.setText("add Vietnamese");
+        jMenu4.add(jMenuItem3);
+
+        jMenu2.add(jMenu4);
+
+        jMenu7.setText("Modify");
+
+        jMenuItem4.setText("English");
+        jMenu7.add(jMenuItem4);
+
+        jMenuItem5.setText("Vietnamese");
+        jMenu7.add(jMenuItem5);
+
+        jMenu2.add(jMenu7);
+
+        jMenu8.setText("Remove");
+
+        jMenuItem6.setText("English");
+        jMenu8.add(jMenuItem6);
+
+        jMenuItem7.setText("Vietnamese");
+        jMenu8.add(jMenuItem7);
+
+        jMenu2.add(jMenu8);
 
         jMenuBar1.add(jMenu2);
 
@@ -166,50 +240,53 @@ public class frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(348, 348, 348)
-                        .addComponent(jButton2)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButton3)
-                        .addGap(89, 89, 89))
+                        .addComponent(Search))
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(Sound)
+                        .addGap(48, 48, 48))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(388, 388, 388)
+                                .addComponent(Author, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(E_V, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(V_E, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jButton4)
-                        .addGap(87, 87, 87)
-                        .addComponent(jButton5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addContainerGap(13, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Search)
+                            .addComponent(Sound))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Author))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(E_V)
+                        .addGap(51, 51, 51)
+                        .addComponent(V_E)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,26 +294,36 @@ public class frame extends javax.swing.JFrame {
     
     
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        jTextField1.setText("");
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jList1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jList1AncestorAdded
-
-        DefaultListModel model = new DefaultListModel();
-        ArrayList list = dic.getKeys();
-        for(int i = 0; i < dic.getKeys().size(); i++)
-            model.addElement(list.get(i));
-        jList1.setModel(model);
+        if(select == 0){
+            DefaultListModel model = new DefaultListModel();
+            for(int i = 0; i < dic1.getKeys1().size(); i++)
+                model.addElement(dic1.getKeys1().get(i));
+            jList1.setModel(model);
+        }
+        else if(select == 1){
+            DefaultListModel model = new DefaultListModel();
+            for(int i = 0; i < dic2.getKeys2().size(); i++)
+                model.addElement(dic2.getKeys2().get(i));
+            jList1.setModel(model);
+        }
         
     }//GEN-LAST:event_jList1AncestorAdded
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        try{
-        jTextPane1.setContentType("text/html");
-        String str = jList1.getSelectedValue();
-        jTextPane1.setText(dic.getWord().get(str).toString());
-        }catch(Exception exception){
-            exception.printStackTrace();
+
+        if(select == 0){
+            jTextPane1.setContentType("text/html");
+            String str = jList1.getSelectedValue();
+            jTextPane1.setText(dic1.getWord1().get(str));
+        }
+        else if(select == 1){
+            jTextPane1.setContentType("text/html");
+            String str = jList1.getSelectedValue();
+            jTextPane1.setText(dic2.getWord2().get(str));
         }
     }//GEN-LAST:event_jList1ValueChanged
 
@@ -244,33 +331,95 @@ public class frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jList1KeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    //Bắt sự kiện cho nút Search
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
+        String s = jTextField1.getText().trim();
+        jTextPane1.setContentType("text/html");
+        if(s == "")
+            JOptionPane.showMessageDialog(null, "Bạn chưa nhập từ!!", "Error", JOptionPane.ERROR_MESSAGE);
+        else if( select == 0 && dic1.getKeys1().contains(s)){
+            jTextPane1.setText(dic1.getWord1().get(s));
+       
+        }
+        else if(select == 1 && dic2.getKeys2().contains(s)){
+            jTextPane1.setText(dic2.getWord2().get(s));
+            
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Không có từ này hoặc bạn tra sai từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_SearchActionPerformed
 
-    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddActionPerformed
-
+    
+    //Bắt phím thoát chương trình
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
+    
+    //Hiện suggestion cho textfield
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        ArrayList l;
-        DefaultListModel model = new DefaultListModel();
-        if(jTextField1.getText() == null)
-            l = new ArrayList(dic.getKeys());
-        else
-            l = s.searchKey(jTextField1.getText(), dic.getKeys());
-        for(int i = 0; i < l.size(); i++)
-            model.addElement(l.get(i));
-        jList1.setModel(model);
+        if(select == 0){
+            ArrayList l;
+            DefaultListModel model1 = new DefaultListModel();
+            if(jTextField1.getText() == null)
+                l = new ArrayList(dic1.getKeys1());
+            else
+                l = s.searchKey(jTextField1.getText(), dic1.getKeys1());
+            for(int i = 0; i < l.size(); i++)
+                model1.addElement(l.get(i));
+            jList1.setModel(model1);
+        }
+        else if(select == 1){
+            ArrayList l;
+            DefaultListModel model2 = new DefaultListModel();
+            if(jTextField1.getText() == null)
+                l = new ArrayList(dic2.getKeys2());
+            else
+                l = s.searchKey(jTextField1.getText(), dic2.getKeys2());
+            for(int i = 0; i < l.size(); i++)
+                model2.addElement(l.get(i));
+            jList1.setModel(model2);
+        }
     }//GEN-LAST:event_jTextField1KeyReleased
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    
+    //Bắt phím chuyển sang từ điển Việt-Anh
+    private void V_EActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_EActionPerformed
+        select = 1;
+        DefaultListModel model = new DefaultListModel();
+            for(int i = 0; i < dic2.getKeys2().size(); i++)
+                model.addElement(dic2.getKeys2().get(i));
+            jList1.setModel(model); 
+        
+    }//GEN-LAST:event_V_EActionPerformed
+
+    
+    //Bắt phím chuyển sang từ điển Anh-Việt
+    private void E_VActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_VActionPerformed
+        select = 0;
+        DefaultListModel model = new DefaultListModel();
+            for(int i = 0; i < dic1.getKeys1().size(); i++)
+                model.addElement(dic1.getKeys1().get(i));
+            jList1.setModel(model);
+    }//GEN-LAST:event_E_VActionPerformed
+
+    
+    //Bắt phím để phát âm thanh
+    private void SoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SoundActionPerformed
+        speak.speak(jList1.getSelectedValue());
+    }//GEN-LAST:event_SoundActionPerformed
+
+    
+    
+    
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        boolean check = true;
+        fADD.setVisible(true);
+        fADD.setLocation(getX()+180, getY()+150);
+        //dic1.reloadFile();
+        dic1.readFile();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,22 +458,29 @@ public class frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Add;
-    private javax.swing.JMenuItem Edit;
+    private javax.swing.JLabel Author;
+    private javax.swing.JButton E_V;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenuItem Press;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton Search;
+    private javax.swing.JButton Sound;
+    private javax.swing.JButton V_E;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;

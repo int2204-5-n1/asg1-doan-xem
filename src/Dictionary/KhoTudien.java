@@ -24,105 +24,52 @@ import java.io.*;
  * @author ID
  */
 public class KhoTudien {
-    protected HashMap<String,String> Word = new HashMap<>();
-    protected ArrayList<String> keys = new ArrayList();
-    String path = "FileDatabase/E_V.zip";
-    public KhoTudien(){
-        readFile();
-    }
-    public HashMap getWord(){
-        return Word;
-    }
-    public ArrayList getKeys(){
-        return keys;
-    }
-    public void readFile() {
-        FileInputStream file = null;
-        ZipInputStream zipStream = null;
-        ZipEntry entry = null;
-        BufferedReader reader = null;
 
-        try {
-            file = new FileInputStream(path);
-            zipStream = new ZipInputStream(file);
-            entry = zipStream.getNextEntry();
-
-            reader = new BufferedReader(new InputStreamReader(zipStream));
-
-            String line, word, def;
-            int wordsNum = 0;
-            while ((line = reader.readLine()) != null) {
-                //System.out.printf("%s\n----------------------\n", line);
-                int index = line.indexOf("<html>");
-                int index2 = line.indexOf("<ul>");
-
-                if (index2 != -1 && index > index2) {
-                    index = index2;
-                }
-
-                if (index != -1) {
-                    word = line.substring(0, index);
-
-                    word = word.trim();
-                    keys.add(word);
-
-                    //word = word.toLowerCase();
-                    def = line.substring(index);
-                    //def = "<html>" + def + "</html>";
-
-                    Word.put(word, def);
-
-                    wordsNum++;
-                }
-            }
-            reader.close();
-
-            System.out.println(wordsNum + " words");
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-
-        //Collections.sort(keys);
-
-    }
     
+
+    //Database Anh-Việt
+    protected HashMap<String,String> Word1 = new HashMap<>();
+    protected ArrayList<String> keys1 = new ArrayList();
+    protected int Type;
     
-    //Viết lại file txt sau khi thêm, xóa hoặc sửa.
-    public void reloadFile(){
-        FileOutputStream file = null;
-        ZipOutputStream zipStream = null;
-        BufferedWriter writer = null;
-
-        try {
-            file = new FileOutputStream("path");
-            zipStream = new ZipOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(zipStream));
-            zipStream.putNextEntry(new ZipEntry(path.replace("./data/", "").replace("zip", "txt")));
-
-            for (String key : keys) {
-                writer.write(key);
-                String def = Word.get(key);
-                if (def != null) {
-                    writer.write(Word.get(key));
-                }
-
-                writer.newLine();
-            }
-
-            writer.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public HashMap<String, String> getWord1() {
+        return Word1;
     }
+
+    public void setWord1(HashMap<String, String> Word1) {
+        this.Word1 = Word1;
+    }
+
+    public ArrayList<String> getKeys1() {
+        return keys1;
+    }
+
+    public void setKeys1(ArrayList<String> keys1) {
+        this.keys1 = keys1;
+    }
+    //Database Việt-Anh
+    protected HashMap<String,String> Word2 = new HashMap<>();
+    protected ArrayList<String> keys2 = new ArrayList();
     
-    
+    public HashMap<String, String> getWord2() {
+        return Word2;
+    }
+
+    public void setWord2(HashMap<String, String> Word2) {
+        this.Word2 = Word2;
+    }
+
+    public ArrayList<String> getKeys2() {
+        return keys2;
+    }
+
+    public void setKeys2(ArrayList<String> keys2) {
+        this.keys2 = keys2;
+    }
+    public int getType() {
+        return Type;
+    }
+    public void setType(int Type) {
+        this.Type = Type;
+    }
 }
