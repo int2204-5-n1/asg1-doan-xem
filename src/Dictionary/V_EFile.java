@@ -28,8 +28,9 @@ public class V_EFile extends KhoTudien{
     
     public V_EFile(){
         readFile();
-    }  
-    String path = "FileDatabase/V_E.zip";
+    }
+    
+    String path = "./FileDatabase/V_E.zip";
     public void readFile() {
         FileInputStream file = null;
         ZipInputStream zipStream = null;
@@ -71,7 +72,7 @@ public class V_EFile extends KhoTudien{
             }
             reader.close();
 
-            System.out.println(wordsNum + " words");
+            System.out.println("Số lượng từ Việt-Anh " + wordsNum + " words");
 
 
         } catch (FileNotFoundException e) {
@@ -87,15 +88,12 @@ public class V_EFile extends KhoTudien{
     
     //Viết lại file txt sau khi thêm, xóa hoặc sửa.
     public void reloadFile(){
-        FileOutputStream file = null;
-        ZipOutputStream zipStream = null;
-        BufferedWriter writer = null;
 
         try {
-            file = new FileOutputStream("path");
-            zipStream = new ZipOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(zipStream));
-            zipStream.putNextEntry(new ZipEntry(path.replace("./data/", "").replace("zip", "txt")));
+            FileOutputStream file  = new FileOutputStream(path);
+            ZipOutputStream zipStream = new ZipOutputStream(file);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream));
+            zipStream.putNextEntry(new ZipEntry(path.replace("./FileDatabase/", "").replace("zip", "txt")));
 
             for (String key : keys2) {
                 writer.write(key);

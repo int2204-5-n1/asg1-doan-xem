@@ -30,19 +30,17 @@ public class E_VFile extends KhoTudien{
     }
     
     
-    String path = "FileDatabase/E_V.zip";
+    String path = "./FileDatabase/E_V.zip";
     public void readFile() {
-        FileInputStream file = null;
-        ZipInputStream zipStream = null;
-        ZipEntry entry = null;
-        BufferedReader reader = null;
+        
+        
 
         try {
-            file = new FileInputStream(path);
-            zipStream = new ZipInputStream(file);
-            entry = zipStream.getNextEntry();
+            FileInputStream file = new FileInputStream(path);
+            ZipInputStream zipStream = new ZipInputStream(file);
+            ZipEntry entry = zipStream.getNextEntry();
 
-            reader = new BufferedReader(new InputStreamReader(zipStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream));
 
             String line, word, def;
             int wordsNum = 0;
@@ -51,9 +49,7 @@ public class E_VFile extends KhoTudien{
                 int index = line.indexOf("<html>");
                 int index2 = line.indexOf("<ul>");
 
-                if (index2 != -1 && index > index2) {
-                    index = index2;
-                }
+                
 
                 if (index != -1) {
                     word = line.substring(0, index);
@@ -72,7 +68,7 @@ public class E_VFile extends KhoTudien{
             }
             reader.close();
 
-            System.out.println(wordsNum + " words");
+            System.out.println("Số lượng từ Anh-Việt " +wordsNum + " words");
 
 
         } catch (FileNotFoundException e) {
@@ -88,15 +84,12 @@ public class E_VFile extends KhoTudien{
     
     //Viết lại file txt sau khi thêm, xóa hoặc sửa.
     public void reloadFile(){
-        FileOutputStream file = null;
-        ZipOutputStream zipStream = null;
-        BufferedWriter writer = null;
 
         try {
-            file = new FileOutputStream("path");
-            zipStream = new ZipOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(zipStream));
-            zipStream.putNextEntry(new ZipEntry(path.replace("./data/", "").replace("zip", "txt")));
+            FileOutputStream file = new FileOutputStream(path);
+            ZipOutputStream zipStream = new ZipOutputStream(file);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream));
+            zipStream.putNextEntry(new ZipEntry(path.replace("./FileDatabase/", "").replace("zip", "txt")));
 
             for (String key : keys1) {
                 writer.write(key);

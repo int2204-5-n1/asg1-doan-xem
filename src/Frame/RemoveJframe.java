@@ -5,7 +5,10 @@
  */
 
 package Frame;
-
+import Dictionary.Process;
+import Dictionary.E_VFile;
+import Dictionary.V_EFile;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ID
@@ -13,9 +16,13 @@ package Frame;
 public class RemoveJframe extends javax.swing.JFrame {
 
     /** Creates new form RemoveJframe */
+    
+    Process pr = new Process();
     public RemoveJframe() {
         initComponents();
     }
+    E_VFile dic1 = new  E_VFile();
+    V_EFile dic2 = new V_EFile();
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -31,7 +38,8 @@ public class RemoveJframe extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Remove");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("Nhập từ cần xóa:");
@@ -88,7 +96,22 @@ public class RemoveJframe extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if(jTextField1.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Bạn hãy nhập từ cần xóa!");
+            return;
+        }
+        if(!dic1.getKeys1().contains(jTextField1.getText().trim().toLowerCase()) && !dic2.getKeys2().contains(jTextField1.getText().trim().toLowerCase())){
+            JOptionPane.showMessageDialog(null, "Không có từ này trong từ điển");
+        }
+        if(dic1.getKeys1().contains(jTextField1.getText().trim().toLowerCase())){
+            pr.remove(jTextField1.getText(), dic1.getWord1(), dic1.getKeys1());
+            JOptionPane.showMessageDialog(null, "Xóa thành công!");
+        }
+        else if(dic2.getKeys2().contains(jTextField1.getText().trim().toLowerCase())){
+            pr.remove(jTextField1.getText(), dic2.getWord2(), dic2.getKeys2());
+            JOptionPane.showMessageDialog(null, "Xóa thành công!");
+        }
+                
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

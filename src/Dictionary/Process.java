@@ -7,7 +7,8 @@ package Dictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+//import java.util.Collection;
+import java.util.*;
 /**
  *
  * @author ID
@@ -53,6 +54,7 @@ public class Process{
         w=w.toLowerCase();
         //int position = search(w, keys1);
         keys1.add(w);
+        Collections.sort(keys1);
         Word1.put(w, define); 
     }
     //XÓA TỪ

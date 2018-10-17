@@ -30,7 +30,7 @@ public class mainFrame extends javax.swing.JFrame {
      */
     public mainFrame() {
         initComponents();
-        setLocation(560,220);
+        setLocation(540,130);
     }
     protected int select = 0;
 
@@ -38,9 +38,9 @@ public class mainFrame extends javax.swing.JFrame {
     Process pr = new Process();
     
     //Các cửa sổ để chỉnh sửa
-    mainFrame.AddJframe fADD = new AddJframe();
-    mainFrame.EditJframe fEdit = new EditJframe();
-    mainFrame.RemoveJframe fRemove = new RemoveJframe();
+    AddJframe fADD = new AddJframe();
+    EditJframe fEdit = new EditJframe();
+    RemoveJframe fRemove = new RemoveJframe();
     
     
     //
