@@ -32,17 +32,15 @@ public class V_EFile extends KhoTudien{
     
     String path = "./FileDatabase/V_E.zip";
     public void readFile() {
-        FileInputStream file = null;
-        ZipInputStream zipStream = null;
-        ZipEntry entry = null;
-        BufferedReader reader = null;
+        
+        
 
         try {
-            file = new FileInputStream(path);
-            zipStream = new ZipInputStream(file);
-            entry = zipStream.getNextEntry();
+            FileInputStream file = new FileInputStream(path);
+            ZipInputStream zipStream = new ZipInputStream(file);
+            ZipEntry entry = zipStream.getNextEntry();
 
-            reader = new BufferedReader(new InputStreamReader(zipStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream,"utf-8"));
 
             String line, word, def;
             int wordsNum = 0;
@@ -51,9 +49,7 @@ public class V_EFile extends KhoTudien{
                 int index = line.indexOf("<html>");
                 int index2 = line.indexOf("<ul>");
 
-                if (index2 != -1 && index > index2) {
-                    index = index2;
-                }
+                
 
                 if (index != -1) {
                     word = line.substring(0, index);
@@ -72,7 +68,7 @@ public class V_EFile extends KhoTudien{
             }
             reader.close();
 
-            System.out.println("Số lượng từ Việt-Anh " + wordsNum + " words");
+            System.out.println("Số lượng từ Việt - Anh " +wordsNum + " words");
 
 
         } catch (FileNotFoundException e) {
@@ -90,10 +86,10 @@ public class V_EFile extends KhoTudien{
     public void reloadFile(){
 
         try {
-            FileOutputStream file  = new FileOutputStream(path);
+            FileOutputStream file = new FileOutputStream(path);
             ZipOutputStream zipStream = new ZipOutputStream(file);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream));
-            zipStream.putNextEntry(new ZipEntry(path.replace("./FileDatabase/", "").replace("zip", "txt")));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream,"utf-8"));
+            zipStream.putNextEntry(new ZipEntry("E_V.txt"));
 
             for (String key : keys2) {
                 writer.write(key);
@@ -112,5 +108,6 @@ public class V_EFile extends KhoTudien{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Số lượng từ Anh - Viet sau khi update: " + keys2.size());
     }
 }

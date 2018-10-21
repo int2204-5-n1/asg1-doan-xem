@@ -40,7 +40,7 @@ public class E_VFile extends KhoTudien{
             ZipInputStream zipStream = new ZipInputStream(file);
             ZipEntry entry = zipStream.getNextEntry();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(zipStream,"utf-8"));
 
             String line, word, def;
             int wordsNum = 0;
@@ -88,8 +88,8 @@ public class E_VFile extends KhoTudien{
         try {
             FileOutputStream file = new FileOutputStream(path);
             ZipOutputStream zipStream = new ZipOutputStream(file);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream));
-            zipStream.putNextEntry(new ZipEntry(path.replace("./FileDatabase/", "").replace("zip", "txt")));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(zipStream,"utf-8"));
+            zipStream.putNextEntry(new ZipEntry("E_V.txt"));
 
             for (String key : keys1) {
                 writer.write(key);
@@ -108,5 +108,6 @@ public class E_VFile extends KhoTudien{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Số lượng từ Anh - Việt sau khi update: " + keys1.size());
     }
 }

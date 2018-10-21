@@ -37,6 +37,9 @@ public class Process{
     
     //ĐỊNH NGHĨA 
     public void modify(String w,String newWord1, String newDefine, HashMap<String,String> Word1, ArrayList<String> keys1){
+        newDefine = newDefine.replace("\n", "");
+        newDefine = newDefine.replace("&lt;", "");
+        newDefine = newDefine.replace("&gt;", "");
         if(newWord1 == null)
             Word1.replace(w, newDefine);
         else if(newDefine == null){
@@ -55,7 +58,8 @@ public class Process{
         //int position = search(w, keys1);
         keys1.add(w);
         Collections.sort(keys1);
-        Word1.put(w, define); 
+        String str = "<html>" + define;
+        Word1.put(w, str); 
     }
     //XÓA TỪ
     public void remove(String w, HashMap<String,String>Word1, ArrayList<String>keys1){
