@@ -7,7 +7,6 @@ package Dictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.Collection;
 import java.util.*;
 /**
  *
@@ -21,6 +20,13 @@ public class Process{
     
 
     //TÌM TỪ
+
+    /**
+     *
+     * @param w
+     * @param keys1
+     * @return
+     */
     public int search(String w, ArrayList<String> keys1){
         if(w.compareTo(keys1.get(0))<= 0)
             return 0;
@@ -32,10 +38,19 @@ public class Process{
             else
                 rear=between;
         }
-        return rear;
+        return rear;    //trả lại vị trí vào list Word 
     }
     
     //ĐỊNH NGHĨA 
+
+    /**
+     *
+     * @param w
+     * @param newWord1
+     * @param newDefine
+     * @param Word1
+     * @param keys1
+     */
     public void modify(String w,String newWord1, String newDefine, HashMap<String,String> Word1, ArrayList<String> keys1){
         newDefine = newDefine.replace("\n", "");
         newDefine = newDefine.replace("&lt;", "");
@@ -53,15 +68,29 @@ public class Process{
         
     }
     //THÊM TỪ
+
+    /**
+     *
+     * @param w
+     * @param define
+     * @param Word1
+     * @param keys1
+     */
     public void add(String w, String define, HashMap<String,String>Word1, ArrayList<String>keys1){
         w=w.toLowerCase();
-        //int position = search(w, keys1);
         keys1.add(w);
         Collections.sort(keys1);
         String str = "<html>" + define;
         Word1.put(w, str); 
     }
     //XÓA TỪ
+
+    /**
+     *
+     * @param w
+     * @param Word1
+     * @param keys1
+     */
     public void remove(String w, HashMap<String,String>Word1, ArrayList<String>keys1){
         int index = keys1.lastIndexOf(w);
         if(index != -1){

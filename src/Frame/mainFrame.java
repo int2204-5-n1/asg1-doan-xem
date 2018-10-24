@@ -18,12 +18,13 @@ import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.event.AncestorEvent;
 import Dictionary.Process;
-import Dictionary.Translate;
+import Dictionary.googleTranslate;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javazoom.jl.decoder.JavaLayerException;
 /**
  *
  * @author ID
@@ -274,6 +275,11 @@ public class mainFrame extends javax.swing.JFrame {
                 .addComponent(Author, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        SearchWord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchWordActionPerformed(evt);
+            }
+        });
         SearchWord.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 SearchWordKeyPressed(evt);
@@ -307,6 +313,11 @@ public class mainFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         Back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/icons8-back-32.png"))); // NOI18N
+        Back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackMouseClicked(evt);
+            }
+        });
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackActionPerformed(evt);
@@ -314,6 +325,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         Up.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/icons8-forward-32.png"))); // NOI18N
+        Up.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpMouseClicked(evt);
+            }
+        });
         Up.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpActionPerformed(evt);
@@ -346,8 +362,8 @@ public class mainFrame extends javax.swing.JFrame {
                         .addComponent(Back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Up, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         jScrollPane2.setViewportView(jTextPane1);
@@ -363,7 +379,7 @@ public class mainFrame extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -384,13 +400,13 @@ public class mainFrame extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 50, Short.MAX_VALUE))
         );
 
@@ -400,15 +416,14 @@ public class mainFrame extends javax.swing.JFrame {
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         fADD.setVisible(true);
         fADD.setLocation(getX() + 180, getY() + 150);
+        fADD.jTextField1.setText("");
+        fADD.jTextPane1.setText("");
     }//GEN-LAST:event_addActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         if (jList1.getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Chọn từ cần sửa!!");
+            JOptionPane.showMessageDialog(null, "Choose a word to edit!!");
         } else {
-            fEdit.jLabel3.setVisible(false);
-            fEdit.jToggleButton1.setVisible(false);
-            fEdit.jToggleButton2.setVisible(false);
             fEdit.setVisible(true);
             fEdit.setLocation(getX() + 200, getY() + 150);
             fEdit.jTextField1.setText(jList1.getSelectedValue());
@@ -423,7 +438,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
         if (jList1.getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Chọn từ cần xóa!!");
+            JOptionPane.showMessageDialog(null, "Choose a word to remove!!");
         } else {
             fRemove.setVisible(true);
             fRemove.setLocation(getX() + 200, getY() + 150);
@@ -433,7 +448,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void SoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SoundActionPerformed
         if (jList1.getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Chọn từ!!");
+            JOptionPane.showMessageDialog(null, "Choose a word!!");
         } else {
             speak.speak(jList1.getSelectedValue());
         }
@@ -442,20 +457,20 @@ public class mainFrame extends javax.swing.JFrame {
     private void SearcherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearcherActionPerformed
         jTextPane1.setContentType("text/html");
         if (SearchWord.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Bạn chưa nhập từ!!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Word is empty. Press!!", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (select == 0) {
             if (dic1.getKeys1().contains(SearchWord.getText())) {
                 back.peek();
                 jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
             } else {
-                JOptionPane.showMessageDialog(null, "Không có từ này hoặc bạn tra sai từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The word was not found or no exist in dictionary!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (select == 1) {
             if (dic2.getKeys2().contains(SearchWord.getText())) {
                 back.peek();
                 jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
             } else {
-                JOptionPane.showMessageDialog(null, "Không có từ này hoặc bạn tra sai từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The word was not found or no exist in dictionary!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -485,14 +500,14 @@ public class mainFrame extends javax.swing.JFrame {
             String str = jList1.getSelectedValue();
             SearchWord.setText(str);
             jTextPane1.setText(dic1.getWord1().get(str));
-            if(str!=null)
+            if(str == null)
                 back.push(str);
         } else if (select == 1) {
             jTextPane1.setContentType("text/html");
             String str = jList1.getSelectedValue();
             SearchWord.setText(str);
             jTextPane1.setText(dic2.getWord2().get(str));
-            if(str!=null)
+            if(str == null)
                 back.push(str);
         }
     }//GEN-LAST:event_jList1ValueChanged
@@ -501,7 +516,7 @@ public class mainFrame extends javax.swing.JFrame {
         if (select == 0) {
             ArrayList l;
             DefaultListModel model1 = new DefaultListModel();
-            if (SearchWord.getText() == null) {
+            if (SearchWord.getText().trim().isEmpty()) {
                 l = new ArrayList(dic1.getKeys1());
             } else {
                 l = s.searchKey(SearchWord.getText(), dic1.getKeys1());
@@ -513,7 +528,7 @@ public class mainFrame extends javax.swing.JFrame {
         } else if (select == 1) {
             ArrayList l;
             DefaultListModel model2 = new DefaultListModel();
-            if (SearchWord.getText() == null) {
+            if (SearchWord.getText().trim().isEmpty()) {
                 l = new ArrayList(dic2.getKeys2());
             } else {
                 l = s.searchKey(SearchWord.getText(), dic2.getKeys2());
@@ -529,14 +544,14 @@ public class mainFrame extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jTextPane1.setContentType("text/html");
             if (SearchWord.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Bạn chưa nhập từ!!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Word is empty. Press!!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (select == 0) {
                 if (dic1.getKeys1().contains(SearchWord.getText())) {
                     if(SearchWord.getText()!= null)
                         back.push(SearchWord.getText());
                     jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
                 } else {
-                    JOptionPane.showMessageDialog(null, "Không có từ này hoặc bạn tra sai từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word was not found or no exist in dictionary!!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (select == 1) {
                 if (dic2.getKeys2().contains(SearchWord.getText())) {
@@ -544,44 +559,18 @@ public class mainFrame extends javax.swing.JFrame {
                         back.push(SearchWord.getText());
                     jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
                 } else {
-                    JOptionPane.showMessageDialog(null, "Không có từ này hoặc bạn tra sai từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word was not found or no exist in dictionary!!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }//GEN-LAST:event_SearchWordKeyPressed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        if(back.isEmpty()){
-            return;
-        }
-        else{
-            up.push(back.peek());
-            SearchWord.setText(back.peek());
-            back.pop();
-            if(dic1.getWord1().containsKey(SearchWord.getText())){
-                jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
-            }
-            else if(dic2.getWord2().containsKey(SearchWord.getText())){
-                jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
-            }
-        }
+       
     }//GEN-LAST:event_BackActionPerformed
 
     private void UpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpActionPerformed
-        if(up.isEmpty()){
-            return;
-        }
-        else{
-            back.push(up.peek());
-            SearchWord.setText(up.peek()); 
-            up.pop();
-            if(dic1.getWord1().containsKey(SearchWord.getText())){
-                jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
-            }
-            else if(dic2.getWord2().containsKey(SearchWord.getText())){
-                jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
-            }
-        }
+        
     }//GEN-LAST:event_UpActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -595,7 +584,47 @@ public class mainFrame extends javax.swing.JFrame {
     private void translateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_translateActionPerformed
         fTranslate.setVisible(true);
         fTranslate.setLocation(getX() + 180, getY() + 150);
+        fTranslate.jTextArea1.setText("");
+        fTranslate.jTextPane1.setText("");
     }//GEN-LAST:event_translateActionPerformed
+
+    private void SearchWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchWordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchWordActionPerformed
+
+    private void BackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseClicked
+        if(back.isEmpty()){
+            return;
+        }
+        else{
+            SearchWord.setText(back.peek());
+            up.push(back.peek());
+            back.pop();
+            if(dic1.getWord1().containsKey(SearchWord.getText())){
+                jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
+            }
+            else if(dic2.getWord2().containsKey(SearchWord.getText())){
+                jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
+            }
+        }
+    }//GEN-LAST:event_BackMouseClicked
+
+    private void UpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpMouseClicked
+        if(up.isEmpty()){
+            return;
+        }
+        else{
+            SearchWord.setText(up.peek()); 
+            back.push(up.peek());
+            up.pop();
+            if(dic1.getWord1().containsKey(SearchWord.getText())){
+                jTextPane1.setText(dic1.getWord1().get(SearchWord.getText()));
+            }
+            else if(dic2.getWord2().containsKey(SearchWord.getText())){
+                jTextPane1.setText(dic2.getWord2().get(SearchWord.getText()));
+            }
+        }
+    }//GEN-LAST:event_UpMouseClicked
 
     /**
      * @param args the command line arguments
@@ -778,28 +807,28 @@ public class mainFrame extends javax.swing.JFrame {
 
         private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             if (jTextField1.getText().trim().isEmpty() || jTextPane1.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Chưa nhập!!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Word is empty. Press!!", "Error", JOptionPane.ERROR_MESSAGE);
                 jTextField1.requestFocus();
             } else if (type == 0) {
                 if (dic1.getKeys1().contains(jTextField1.getText())) {
-                    JOptionPane.showMessageDialog(null, "Đã có từ này trong từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word is already!!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm từ này?", "Question", JOptionPane.YES_NO_OPTION);
+                    int a = JOptionPane.showConfirmDialog(null, "Do you want to add?", "Question", JOptionPane.YES_NO_OPTION);
                     if (a == JOptionPane.YES_OPTION) {
                         pr.add(jTextField1.getText(), jTextPane1.getText(), dic1.getWord1(), dic1.getKeys1());
-                        JOptionPane.showMessageDialog(null, "Đã thêm!", "Done", -1);
+                        JOptionPane.showMessageDialog(null, "Done!", "Done", -1);
                         setVisible(false);
                         setupJlist();
                     }
                 }
             } else if (type == 1) {
                 if (dic2.getKeys2().contains(jTextField1.getText())) {
-                    JOptionPane.showMessageDialog(null, "Đã có từ này trong từ điển!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word is already!!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm từ này?", "Question", JOptionPane.YES_NO_OPTION);
+                    int a = JOptionPane.showConfirmDialog(null, "Do you want to add?", "Question", JOptionPane.YES_NO_OPTION);
                     if (a == JOptionPane.YES_OPTION) {
                         pr.add(jTextField1.getText(), jTextPane1.getText(), dic2.getWord2(), dic2.getKeys2());
-                        JOptionPane.showMessageDialog(null, "Đã thêm!", "Done", -1);
+                        JOptionPane.showMessageDialog(null, "Done!", "Done", -1);
                         setVisible(false);
                         setupJlist();
                     }
@@ -813,12 +842,12 @@ public class mainFrame extends javax.swing.JFrame {
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
             type = 0;
-            JOptionPane.showMessageDialog(null, "Bạn chọn thêm từ Tiếng Anh", "Done!!", -1);
+            JOptionPane.showMessageDialog(null, "You selected to add English!!", "Done!!", -1);
         }
 
         private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
             type = 1;
-            JOptionPane.showMessageDialog(null, "Bạn chọn thêm từ Tiếng Việt", "Done!!", -1);
+            JOptionPane.showMessageDialog(null, "You selected to add Vietnamese!!", "Done!!", -1);
         }
 
         // Variables declaration - do not modify                     
@@ -927,25 +956,25 @@ public class mainFrame extends javax.swing.JFrame {
 
         private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             if (jTextField1.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Bạn hãy nhập từ cần xóa!");
+                JOptionPane.showMessageDialog(null, "Choose a word to remove!");
                 return;
             }
             if (!dic1.getKeys1().contains(jTextField1.getText().trim().toLowerCase()) && !dic2.getKeys2().contains(jTextField1.getText().trim().toLowerCase())) {
-                JOptionPane.showMessageDialog(null, "Không có từ này trong từ điển");
+                JOptionPane.showMessageDialog(null, "The word was not found!!");
             }
             if (dic1.getKeys1().contains(jTextField1.getText().trim().toLowerCase())) {
-                int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Question", JOptionPane.YES_NO_OPTION);
+                int a = JOptionPane.showConfirmDialog(null, "Do you want to remove?", "Question", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.OK_OPTION) {
                     pr.remove(jTextField1.getText(), dic1.getWord1(), dic1.getKeys1());
-                    JOptionPane.showMessageDialog(null, "Xóa thành công!");
+                    JOptionPane.showMessageDialog(null, "Done!");
                     setupJlist();
                     fRemove.setVisible(false);
                 }
             } else if (dic2.getKeys2().contains(jTextField1.getText().trim().toLowerCase())) {
-                int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Question", JOptionPane.YES_NO_OPTION);
+                int a = JOptionPane.showConfirmDialog(null, "Do you want to remove?", "Question", JOptionPane.YES_NO_OPTION);
                 if (a == JOptionPane.OK_OPTION) {
                     pr.remove(jTextField1.getText(), dic2.getWord2(), dic2.getKeys2());
-                    JOptionPane.showMessageDialog(null, "Xóa thành công!");
+                    JOptionPane.showMessageDialog(null, "Done!");
                     setupJlist();
                     fRemove.setVisible(false);
                 }
@@ -1021,6 +1050,11 @@ public class mainFrame extends javax.swing.JFrame {
             });
 
             jButton3.setText("Cancel");
+            jButton3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton3ActionPerformed(evt);
+                }
+            });
 
             jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             jLabel2.setText("Meaning");
@@ -1107,16 +1141,17 @@ public class mainFrame extends javax.swing.JFrame {
             );
 
             pack();
-        }// </editor-fold>                        
+        }// </editor-fold>                        y
+        
 
         private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {
             type = 0;
-            JOptionPane.showMessageDialog(null, "Bạn chọn sửa từ Tiếng Anh", "Done!!", -1);
+            JOptionPane.showMessageDialog(null, "You selected to edit English!!", "Done!!", -1);
         }
 
         private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             type = 1;
-            JOptionPane.showMessageDialog(null, "Bạn chọn sửa từ Tiếng Việt", "Done!!", -1);
+            JOptionPane.showMessageDialog(null, "You selected to edit Vietnamese!!", "Done!!", -1);
         }
 
         private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1167,10 +1202,8 @@ public class mainFrame extends javax.swing.JFrame {
     /**
      * Creates new form GoogleTranslate
      */
-    
-    Translate tran = new Translate();
-    
-    Sound sound = new Sound();
+    //Tạo đối tượng để chạy API
+    googleTranslate tran2  = new googleTranslate();
     public GoogleTranslate() {
         initComponents();
     }
@@ -1227,7 +1260,13 @@ public class mainFrame extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/icons8-speaker-filled-25.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                try {
+                    jButton4ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JavaLayerException ex) {
+                    Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -1294,7 +1333,13 @@ public class mainFrame extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/icons8-speaker-filled-25.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                try {
+                    jButton5ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JavaLayerException ex) {
+                    Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -1350,7 +1395,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {                                         
         String sub = null;
-        sub = tran.translate(jLabel1.getText().substring(0,2).toLowerCase(), jLabel2.getText().substring(0,2).toLowerCase(), jTextPane1.getText());
+        sub = tran2.textTranslate(jLabel1.getText(), jLabel2.getText(), jTextPane1.getText());
         jTextArea1.setText(sub);
     }                                        
 
@@ -1359,20 +1404,23 @@ public class mainFrame extends javax.swing.JFrame {
         tmp = jLabel1.getText();
         jLabel1.setText(jLabel2.getText());
         jLabel2.setText(tmp);
+        tmp = jTextArea1.getText();
+        jTextArea1.setText(jTextPane1.getText());
+        jTextPane1.setText(tmp);
     }                                        
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        sound.speak(jTextPane1.getText());
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, JavaLayerException {                                         
+        tran2.speech(jTextPane1.getText(), jLabel1.getText());
     }                                        
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        sound.speak(jTextArea1.getText());
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, JavaLayerException {                                         
+        tran2.speech(jTextArea1.getText(), jLabel2.getText());
     }                                        
 
     private void jTextPane1KeyPressed(java.awt.event.KeyEvent evt) throws IOException {                                      
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String sub = null;
-            sub = tran.translate(jLabel1.getText().substring(0,2).toLowerCase(), jLabel2.getText().substring(0,2).toLowerCase(), jTextPane1.getText());
+            sub = tran2.textTranslate(jLabel1.getText(), jLabel2.getText(), jTextPane1.getText());
             jTextArea1.setText(sub);
         }
     }                                     

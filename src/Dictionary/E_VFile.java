@@ -45,11 +45,7 @@ public class E_VFile extends KhoTudien{
             String line, word, def;
             int wordsNum = 0;
             while ((line = reader.readLine()) != null) {
-                //System.out.printf("%s\n----------------------\n", line);
                 int index = line.indexOf("<html>");
-                int index2 = line.indexOf("<ul>");
-
-                
 
                 if (index != -1) {
                     word = line.substring(0, index);
@@ -57,9 +53,9 @@ public class E_VFile extends KhoTudien{
                     word = word.trim();
                     keys1.add(word);
 
-                    //word = word.toLowerCase();
+
                     def = line.substring(index);
-                    //def = "<html>" + def + "</html>";
+
 
                     Word1.put(word, def);
 
@@ -94,10 +90,7 @@ public class E_VFile extends KhoTudien{
             for (String key : keys1) {
                 writer.write(key);
                 String def = Word1.get(key);
-                if (def != null) {
                     writer.write(Word1.get(key));
-                }
-
                 writer.newLine();
             }
 
