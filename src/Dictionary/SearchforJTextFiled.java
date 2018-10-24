@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class SearchforJTextFiled {
     public ArrayList searchKey(String release, ArrayList<String> keys){
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList();   //tạo list mới để tìm kiếm
         int len = release.length();
         if(len != 0){
         for(int i = 0; i < keys.size(); i++)

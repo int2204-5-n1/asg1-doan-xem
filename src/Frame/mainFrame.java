@@ -666,8 +666,7 @@ public class mainFrame extends javax.swing.JFrame {
         /**
          * Creates new form AddJframe
          */
-        private int type;
-        private boolean check;
+        private int type = 0;
 
         public AddJframe() {
             initComponents();
@@ -800,18 +799,20 @@ public class mainFrame extends javax.swing.JFrame {
             pack();
         }// </editor-fold>                        
 
+        //Nút Cancel
         private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
             setVisible(false);
 
         }
 
+        //Nút OK
         private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             if (jTextField1.getText().trim().isEmpty() || jTextPane1.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Word is empty. Press!!", "Error", JOptionPane.ERROR_MESSAGE);
-                jTextField1.requestFocus();
+                jTextField1.requestFocus(); //trả con trỏ về đầu textfield
             } else if (type == 0) {
                 if (dic1.getKeys1().contains(jTextField1.getText())) {
-                    JOptionPane.showMessageDialog(null, "The word is already!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word is existed!!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int a = JOptionPane.showConfirmDialog(null, "Do you want to add?", "Question", JOptionPane.YES_NO_OPTION);
                     if (a == JOptionPane.YES_OPTION) {
@@ -823,7 +824,7 @@ public class mainFrame extends javax.swing.JFrame {
                 }
             } else if (type == 1) {
                 if (dic2.getKeys2().contains(jTextField1.getText())) {
-                    JOptionPane.showMessageDialog(null, "The word is already!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The word is existed!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int a = JOptionPane.showConfirmDialog(null, "Do you want to add?", "Question", JOptionPane.YES_NO_OPTION);
                     if (a == JOptionPane.YES_OPTION) {
@@ -1400,13 +1401,14 @@ public class mainFrame extends javax.swing.JFrame {
     }                                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String tmp="";
-        tmp = jLabel1.getText();
+        String tmp1="";
+        tmp1 = jLabel1.getText();
         jLabel1.setText(jLabel2.getText());
-        jLabel2.setText(tmp);
-        tmp = jTextArea1.getText();
+        jLabel2.setText(tmp1);
+        String tmp2 = "";
+        tmp2 = jTextArea1.getText();
         jTextArea1.setText(jTextPane1.getText());
-        jTextPane1.setText(tmp);
+        jTextPane1.setText(tmp2);
     }                                        
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, JavaLayerException {                                         
@@ -1418,11 +1420,7 @@ public class mainFrame extends javax.swing.JFrame {
     }                                        
 
     private void jTextPane1KeyPressed(java.awt.event.KeyEvent evt) throws IOException {                                      
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String sub = null;
-            sub = tran2.textTranslate(jLabel1.getText(), jLabel2.getText(), jTextPane1.getText());
-            jTextArea1.setText(sub);
-        }
+   
     }                                     
 
     /**

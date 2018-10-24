@@ -10,7 +10,6 @@ import GoogleAPI.Language;
 import java.io.IOException;
 import java.io.InputStream;
 import javazoom.jl.decoder.JavaLayerException;
-import sun.audio.AudioDataStream;
 /**
  *
  * @author ID
@@ -24,10 +23,9 @@ public class googleTranslate {
         Audio audio = Audio.getInstance();
         InputStream input = null;
         if(lang.equals("English"))
-            input  = audio.getAudio(str, Language.ENGLISH);
+            input = audio.getAudio(str, Language.ENGLISH);
         else if(lang.equals("Vietnamese"))
             input  = audio.getAudio(str, Language.VIETNAMESE);   
         audio.play(input);
-        
     }
 }
