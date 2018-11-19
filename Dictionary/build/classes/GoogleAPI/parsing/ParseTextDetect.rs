@@ -1,0 +1,1 @@
+gtranslate.parsing.ParseTextDetect
