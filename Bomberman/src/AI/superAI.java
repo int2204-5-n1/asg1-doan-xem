@@ -151,9 +151,6 @@ public class superAI {
 
         int [] parent = new int[number+1];
         boolean [] visted = new boolean[number+1];
-        if(start < 0) start*=(-1);
-        if(end  < 0) end*= (-1);
-
         visted[start] = false;
         parent[start] = -1; // sét mặc định đỉnh cha
         parent[end] = -1;
@@ -199,11 +196,6 @@ public class superAI {
         int move = useBFS(start,end);
         if(move == -1)
             return random.nextInt(4)+ 1;
-        if(move - start == 1)   return 2;
-        if(start - move == 1)   return 1;
-        if(start < move)        return 3;
-        if(move > start)        return 4;
-
         return -1;
     }
 }
